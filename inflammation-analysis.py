@@ -11,6 +11,7 @@ def main(args):
     The Controller is responsible for:
     - selecting the necessary models and views for the current task
     - passing data between models and views
+
     @type args: input files
     """
     in_files = args.input_files
