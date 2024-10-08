@@ -5,14 +5,17 @@ import numpy.testing as npt
 from unittest.mock import Mock
 import math
 from pathlib import Path
-
 import pytest
 
-
-def test_daily_mean_zeros():
-    """Test that mean function works for an array of zeros."""
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [0, 0], [0, 0], [0, 0] ], [0, 0]),
+        ([ [1, 2], [3, 4], [5, 6] ], [3, 4]),
+    ])
+def test_daily_mean(test, expected):
+    """Test mean function works for array of zeroes and positive integers."""
     from inflammation.models import daily_mean
-
     test_input = np.array([[0, 0],
                            [0, 0],
                            [0, 0]])
@@ -72,3 +75,33 @@ def test_compute_standard_deviation_by_day(data, expected_output):
 
     result = compute_standard_deviation_by_day(data)
     npt.assert_array_almost_equal(result, expected_output)
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [0, 0], [0, 0], [0, 0] ], [0, 0]),
+        ([ [1, 2], [3, 4], [5, 6] ], [5, 6]),
+    ])
+def test_daily_max(test, expected):
+    """Test mean function works for array of zeroes and positive integers."""
+    from inflammation.models import daily_max
+    npt.assert_array_equal(daily_max(np.array(test)), np.array(expected))
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [0, 0], [0, 0], [0, 0] ], [0, 0]),
+        ([ [1, 2], [3, 4], [5, 6] ], [1, 2]),
+    ])
+def test_daily_min(test, expected):
+    """Test mean function works for array of zeroes and positive integers."""
+    from inflammation.models import daily_min
+    npt.assert_array_equal(daily_min(np.array(test)), np.array(expected))
+
+
+def test_daily_min_string():
+    """Test for TypeError when passing strings"""
+    from inflammation.models import daily_min
+
+    with pytest.raises(TypeError):
+        error_expected = daily_min([['Hello', 'there'], ['General', 'Kenobi']])
