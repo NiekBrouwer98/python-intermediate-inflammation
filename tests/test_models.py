@@ -50,7 +50,7 @@ def test_compute_data_mock_source():
 
 def test_analyse_data():
     from inflammation.compute_data import analyse_data, CSVDataSource
-    path = Path.cwd() / "../data"
+    path = Path.cwd() / "data"
     data_source = CSVDataSource(path)
     result = analyse_data(data_source)
 
