@@ -46,7 +46,18 @@ def daily_min(data):
     return np.min(data, axis=0)
 
 
+def compute_standard_deviation(data):
+    """Computes and returns standard deviation for data as a dictionary."""
+    mean_data = np.mean(data, axis=0)
+    devs = []
+    for entry in data:
+        devs.append((entry - mean_data) * (entry - mean_data))
+
+    std_dev_data = sum(devs) / len(data)
+    return {'standard deviation': std_dev_data}
+
 def load_json(filename):
     with open(filename, 'r', encoding='utf-8') as file:
         data_as_json = json.load(file)
         return [np.array(entry['observations']) for entry in data_as_json]
+
